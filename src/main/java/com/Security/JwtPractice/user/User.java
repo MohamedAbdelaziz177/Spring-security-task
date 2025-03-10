@@ -15,7 +15,8 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 @Table(name = "user")
 public class User {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String firstName;
