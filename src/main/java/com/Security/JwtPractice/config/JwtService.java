@@ -36,6 +36,14 @@ public class JwtService {
                 .compact();
     }
 
+    public boolean isValidToken(String token, UserDetails userDetails) {
+        return !isExpired(token) && extractUsername(token).equals(userDetails.getUsername());
+    }
+
+    public boolean isExpired(String token) {
+        return  extractExpiration(token).before(new Date(System.currentTimeMillis()));
+    }
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
