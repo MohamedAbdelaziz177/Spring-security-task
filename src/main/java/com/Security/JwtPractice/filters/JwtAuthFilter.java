@@ -1,6 +1,6 @@
-package com.Security.JwtPractice.config;
+package com.Security.JwtPractice.filters;
 
-import jakarta.persistence.Column;
+import com.Security.JwtPractice.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +37,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
 
-        userName = jwtService.extractUsername(jwt);
+        email = jwtService.extractUsername(jwt);
+
+        if(email != null){}
     }
 }

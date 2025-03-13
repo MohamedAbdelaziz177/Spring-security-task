@@ -1,4 +1,4 @@
-package com.Security.JwtPractice.config;
+package com.Security.JwtPractice.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
