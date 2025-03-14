@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SecurityConfig {
 
     private final UserRepository userRepository;
-    private final AuthenticationProvider authProvider;
 
-    public SecurityConfig(UserRepository userRepository, AuthenticationProvider authProvider)
+
+    public SecurityConfig(UserRepository userRepository)
     {
         this.userRepository = userRepository;
-        this.authProvider = authProvider;
+
     }
 
     @Bean
@@ -47,7 +47,7 @@ public class SecurityConfig {
         ).formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authProvider);
+                .authenticationProvider(getAuthProvider());
                // .addFilterBefore();
 
 
