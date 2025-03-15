@@ -1,4 +1,4 @@
-package Controllers;
+package com.Security.JwtPractice.Controllers;
 
 import jakarta.persistence.Tuple;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/emp")
 public class EmployeeController {
 
     @GetMapping("/getAll")
