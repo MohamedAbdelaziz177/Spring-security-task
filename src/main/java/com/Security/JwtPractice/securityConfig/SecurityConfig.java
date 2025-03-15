@@ -32,21 +32,25 @@ public class SecurityConfig {
     public SecurityConfig(UserRepository userRepository)
     {
         this.userRepository = userRepository;
-
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests((requests) -> requests
+        http.csrf(csrf -> csrf.disable())
+             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+             .
+
+                authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/api/getAll").permitAll()
                 .requestMatchers("api/get").permitAll()
                 .requestMatchers("api/update").authenticated()
                 .requestMatchers("api/delete").hasRole("ADMIN")
                 .anyRequest().permitAll()
-        ).formLogin(Customizer.withDefaults())
+        ).
+                formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .authenticationProvider(getAuthProvider());
                // .addFilterBefore();
 
@@ -59,6 +63,9 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username).orElse(null);
+
+
+        // المفروض ان بيكريت اوبجيكت من يوزر ديتيلاز سيرفس وبيأوفرايد لود يوزر باي يوزر نيم وبيجيب اليوزر عن طريق الايميل
     }
 
     @Bean
