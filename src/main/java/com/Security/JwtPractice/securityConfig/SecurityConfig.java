@@ -1,9 +1,11 @@
 package com.Security.JwtPractice.securityConfig;
 
+import com.Security.JwtPractice.filters.JwtAuthFilter;
 import com.Security.JwtPractice.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -19,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Configuration
@@ -28,10 +31,11 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
 
+    private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConfig(UserRepository userRepository)
-    {
+    public SecurityConfig(UserRepository userRepository, @Lazy JwtAuthFilter jwtAuthFilter) {
         this.userRepository = userRepository;
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Bean
@@ -42,17 +46,18 @@ public class SecurityConfig {
              .
 
                 authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/api/getAll").permitAll()
-                .requestMatchers("api/get").permitAll()
-                .requestMatchers("api/update").authenticated()
-                .requestMatchers("api/delete").hasRole("ADMIN")
+                .requestMatchers("/api/emp/getAll").permitAll()
+                .requestMatchers("api/emp/get").permitAll()
+                .requestMatchers("api/emp/update").authenticated()
+                .requestMatchers("api/emp/delete").hasRole("ADMIN")
                 .anyRequest().permitAll()
         ).
                 formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
 
-                .authenticationProvider(getAuthProvider());
-               // .addFilterBefore();
+                .authenticationProvider(getAuthProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
 
 
         return http.build();
