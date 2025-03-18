@@ -36,6 +36,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String token;
         final String email;
 
+         if("/api/auth/register".equals(request.getRequestURI()) ||
+                 "/api/auth/login".equals(request.getRequestURI())
+         )
+         {
+             filterChain.doFilter(request, response);
+             return;
+         }
+
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
 
             filterChain.doFilter(request, response);

@@ -19,13 +19,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDto> Register(@RequestBody RegisterDto registerDto) {
 
-      // AuthResponseDto authResponseDto = authService.Register(registerDto);
+        AuthResponseDto authResponseDto = authService.Register(registerDto);
 
-      // System.out.println(authResponseDto.getToken());
+        System.out.println(authResponseDto.getToken());
 
-      // return ResponseEntity.ok(authResponseDto);
+        return ResponseEntity.ok(authResponseDto);
 
-        return ResponseEntity.ok(new AuthResponseDto());
+
 
     }
 

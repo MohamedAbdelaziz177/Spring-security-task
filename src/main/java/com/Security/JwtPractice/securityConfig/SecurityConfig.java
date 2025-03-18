@@ -46,7 +46,7 @@ public class SecurityConfig {
              .
 
                 authorizeHttpRequests((requests) -> requests
-
+                        .requestMatchers("/DoNothing", "/register/**", "/login").permitAll()
                 .requestMatchers("/api/emp/getAll").permitAll()
                 .requestMatchers("/api/emp/get").permitAll()
                 .requestMatchers("/api/emp/update").authenticated()
