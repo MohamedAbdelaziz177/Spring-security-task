@@ -7,10 +7,7 @@ import com.Security.JwtPractice.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthenticatedReactiveAuthorizationManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,9 +19,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDto> Register(@RequestBody RegisterDto registerDto) {
 
-        AuthResponseDto authResponseDto = authService.Register(registerDto);
+      // AuthResponseDto authResponseDto = authService.Register(registerDto);
 
-        return ResponseEntity.ok(authResponseDto);
+      // System.out.println(authResponseDto.getToken());
+
+      // return ResponseEntity.ok(authResponseDto);
+
+        return ResponseEntity.ok(new AuthResponseDto());
 
     }
 
@@ -34,6 +35,11 @@ public class AuthController {
         AuthResponseDto authResponseDto = authService.Login(loginDto);
 
         return ResponseEntity.ok(authResponseDto);
+    }
+
+    @GetMapping("/DoNothing")
+    public String DoNothing(){
+        return "Do Nothing";
     }
 
 }

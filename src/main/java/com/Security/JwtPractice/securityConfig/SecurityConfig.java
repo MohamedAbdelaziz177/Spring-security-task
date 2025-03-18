@@ -46,19 +46,18 @@ public class SecurityConfig {
              .
 
                 authorizeHttpRequests((requests) -> requests
+
                 .requestMatchers("/api/emp/getAll").permitAll()
-                .requestMatchers("api/emp/get").permitAll()
-                .requestMatchers("api/emp/update").authenticated()
-                .requestMatchers("api/emp/delete").hasRole("ADMIN")
+                .requestMatchers("/api/emp/get").permitAll()
+                .requestMatchers("/api/emp/update").authenticated()
+                .requestMatchers("/api/emp/delete").hasRole("ADMIN")
                 .anyRequest().permitAll()
-        ).
-                formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+        )
+           //     formLogin(Customizer.withDefaults())
+             //   .httpBasic(Customizer.withDefaults())
 
                 .authenticationProvider(getAuthProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-
 
         return http.build();
     }
